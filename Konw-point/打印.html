@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin:0;
+        }
+        .div1{
+            width: 100px;
+            height: 100px;
+            border: 3px solid #f00;
+        }
+    </style>
+</head>
+<body>
+<div class="div1" id="div1">打印</div>
+<script type="text/javascript">
+ div1.onclick=function(){
+    winname = window.open('', "_blank", '');
+    winname.document.body.innerHTML = '好好学习，天天向上';
+    winname.print();
+ }
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+function formatterDateDay(date){
+	var dt = new Date(date);
+	return (dt.getFullYear()+"-"+checkNum(dt.getMonth()+1)+"-"+checkNum(dt.getDate()));
+};
+
+或者--更全的
+//时间戳转日期
+        formatterDateDay:function(date,flag){ //时间戳转日期
+        	var me=this;
+        	if(!date){;
+        	return false;
+        	}else{
+        		if(flag && flag==true){
+        			var dt = new Date(date);
+        			return (dt.getFullYear()+"-"
+        				   +me.checkNum(dt.getMonth()+1)+"-"
+        				   +me.checkNum(dt.getDate()));
+        		}else{
+        			var dt = new Date(date);
+        			return (dt.getFullYear()+"-"
+        				   +me.checkNum(dt.getMonth()+1)+"-"
+        				   +me.checkNum(dt.getDate())+" "
+        				   
+        				   +me.checkNum(dt.getHours())+":"
+        				   +me.checkNum(dt.getMinutes())+":"
+        				   +me.checkNum(dt.getSeconds()));
+        		}
+        	}       	
+        },
+        checkNum:function(num){//日期转换后，个位数加零
+        	if(num < 10){
+        		return "0"+num;
+        	}
+        	return num;
+        },

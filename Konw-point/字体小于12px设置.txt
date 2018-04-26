@@ -1,0 +1,8 @@
+display: inline-block;
+font-size: 9px;  
+-webkit-transform: scale(0.75);  
+ -o-transform: scale(1);  
+
+
+
+对于行内元素要以块元素显示才可进行scale缩放

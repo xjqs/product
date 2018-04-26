@@ -1,0 +1,6 @@
+my97DataPicker  api  http://www.my97.net/dp/demo/resource/2.4.asp
+条件：开始和结束时间都不能选择今天以后时间，开始时间不能大于结束时间
+开始时间：
+<input class="createTimeBegin Wdate" placeholder="开始时间" id="startDate" type="text"  onFocus="var endDate=$dp.$('endDate');WdatePicker({onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\'}'})">	
+结束时间：
+<input class="createTimeEnd Wdate" placeholder="结束时间" id="endDate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'%y-%M-%d'})">

@@ -1,0 +1,13 @@
+ //数字保留两位小数 
+        toDecimal:function (obj) {
+          if(isNaN(obj.value)){
+        	  obj.value=""
+          }else{
+        	  if(obj.getAttribute("data-name")==1){
+            	  if(obj.value>=1000){
+            		  obj.value="999.99"
+            	  }
+              }
+          	  obj.value=obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+          }        
+        }

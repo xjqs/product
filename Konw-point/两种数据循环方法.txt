@@ -1,0 +1,38 @@
+dict.js 下拉
+
+1，数据格式为：
+{
+1: "通用",
+2: "火灾报警控制器",
+3: "手动火灾报警按钮",
+4: "消火栓按钮",
+5: "火灾探测器",
+6: "感温火灾探测器",
+7: "点型感温火灾探测器",
+8: "点型感温火灾探测器(S型)",
+9: "点型感温火灾探测器(R型)"
+}
+数据循环方式：
+$.each(data, function(name, value) {				
+	me.buildingSelect.append('<option orgId='+name+'>'+value+'</option>');
+});
+
+2，数据格式为：
+{
+id: 53,
+name: "北京大学",
+address: "北京市",
+memo: "大学",
+status: 1,
+},
+{
+id: 54,
+name: "清华大学_zhws",
+address: "",
+memo: "",
+status: 1,
+},			
+数据循环方式：		
+for(var i=0;i<data.length;i++){		
+	me.deviceType.append('<option orgId="'+data[i].id+'">'+data[i].name+'</option>');
+};

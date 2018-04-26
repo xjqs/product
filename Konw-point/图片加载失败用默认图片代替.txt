@@ -1,0 +1,7 @@
+$('img').error(function(){
+            $(this).attr('src', "default.jpg(默认图片的url地址)");
+         });
+		 
+		 
+		 
+如果img图片少的话可用：<img src='test.jpg' alt='test' onerror="this.src='default.jpg'">

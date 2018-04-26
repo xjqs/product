@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+	<script type="text/javascript">
+	$(function(){
+	/*实例一Mock.mock(template )*/
+	/*	var template = {
+    'title': 'Syntax Demo',
+
+    'string1|1-6': '★',
+    'string2|3': 'value',
+
+    'number1|+1': 100,
+    'number2|1-100': 100,
+    'number3|1-100.1-10': 1,
+    'number4|123.1-10': 1,
+    'number5|123.3': 1,
+    'number6|123.10': 1.123,
+
+    'boolean1|1': true,
+    'boolean2|1-2': true,
+
+    'object1|2-4': {
+        '110000': '北京市',
+        '120000': '天津市',
+        '130000': '河北省',
+        '140000': '山西省'
+    },
+    'object2|2': {
+        '310000': '上海市',
+        '320000': '江苏省',
+        '330000': '浙江省',
+        '340000': '安徽省'
+    },
+
+    'array1|1': ['AMD', 'CMD', 'KMD', 'UMD'],
+    'array2|1-10': ['Mock.js','hi'],
+    'array3|3': ['Mock.js'],
+
+    'function': function() {
+        return this.title
+    }
+}
+var data = Mock.mock(template)
+JSON.stringify(value[, replacer [, space]]) 方法是将一个JavaScript值(对象或者数组)转换为一个 JSON字符串
+（1）value：将要序列化成 一个JSON 字符串的值。
+（2）replacer 可选
+如果该参数是一个函数，则在序列化过程中，被序列化的值的每个属性都会经过该函数的转换和处理；如果该参数是一个数组，则只有包含在这个数组中的属性名才会被序列化到最终的 JSON 字符串中；如果该参数为null或者未提供，则对象所有的属性都会被序列化；
+（3）space 可选
+指定缩进用的空白字符串，用于美化输出（pretty-print）；如果参数是个数字，它代表有多少的空格；上限为10。该值若小于1，则意味着没有空格；如果该参数为字符串(字符串的前十个字母)，该字符串将被作为空格；如果该参数没有提供（或者为null）将没有空格。
+
+$('<pre>').text(JSON.stringify(data, null, 4))
+    .appendTo('body')*/
+
+    /*实例二Mock.mock( rurl, template )*/
+	Mock.mock(/\.json/, {
+    'list|1-10': [{
+        'id|+1': 1,
+        'email': '@EMAIL'
+    }]
+	})
+	$.ajax({
+	    url: 'hello.json',
+	    dataType: 'json'
+	}).done(function(data, status, jqXHR){
+	    $('<pre>').text(JSON.stringify(data, null, 4)).appendTo('body')
+	})
+})
+	</script>
+</head>
+<body>
+	<div id="dataList"></div>
+	<div class="fk"><div>
+</body>
+</html>

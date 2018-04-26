@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+/* 第一种 */
+	/* .left{
+      float: left;
+      width: 300px;
+      background: yellow;
+    }
+    .right{
+      width: 100%;
+      background: #bbb;
+    } */
+  /* 第二种 */
+  /* .content{
+    display: flex;
+  }
+  .left{
+    width: 300px;
+    background: yellow;
+  }
+  .right{
+    flex: 1;
+    background: #bbb;
+  } */
+  /* 第三种 */
+  .left{
+    float: left;
+    width: 300px;
+    background: yellow;
+  }
+  .right{
+    float: left;
+    width:calc(100% - 300px);
+    background: #bbb;
+  }
+</style>
+<body>
+	<div class="content">
+      <div class="left">左边定宽</div>
+      <div class="right">右边自适应</div>
+    </div>
+</body>
+</html>

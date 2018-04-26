@@ -1,0 +1,72 @@
+var html='<div class="alarmExport" style="border: none;">'+
+			'<form id="form1" method="post" action="../../bike/impBike.do" enctype="multipart/form-data">'+
+			'<input type="file" name="upfile" accept="xlsx" id="devicefile">'+
+			'<button id="deviceBtn" type="button">导入</button>'+
+			'</form>'+
+			'<form id="form2">'+
+			'<button id="floordownload" type="button">下载模板</button>'+
+			'</form></div>'
+			layer.open({
+				type: 1,
+				title:'导入',
+				area:['400px','190px'],
+				zIndex:500,
+				shadeClose: false, //点击遮罩关闭
+				content: html,
+				btn: '关闭',
+				yes: function (index, layero) {
+					layer.close(index);
+				},
+				success: function(layero, index){
+					$("#deviceBtn").unbind().on('click',function() {
+						var valuefile=$("#devicefile").val();
+						if(valuefile){
+							var indexLoad=cLib.base.setLoading();
+							if(allFN.selectFile($("#devicefile").val())){
+							}else{
+								return false;
+							}
+							$("#form1").ajaxSubmit({
+								data:{
+									'path':valuefile,
+									'companyCode':$("#powerdata",parent.document).attr('code')
+								},
+								success : function(json) {
+									cLib.base.removeLoading(indexLoad);
+									if(json.ret==0){
+										layer.msg('导入成功！', {icon: 6,shade:0.6,shadeClose :true,time:1000});
+										layer.close(index);
+										$("#dataList").datagrid('reload');
+									}else{
+										layer.msg(json.desc);
+									}
+									
+								},
+								error:function(){
+									layer.msg('系统异常')
+								}
+							});
+						}else{
+							layer.msg('请选择文件');
+						}
+					});
+					/*下载*/
+					$("#floordownload").unbind().on('click',function(){
+						window.open("../../bike/outexcel.do");
+					});
+				}
+			});
+			
+			
+			
+		Excel格式判断
+		allFN.selectFile=function(fnUpload) {
+		var filename = fnUpload; 	
+		var mime = filename.toLowerCase().substr(filename.lastIndexOf("."));
+		if(mime!=".xls" && mime!=".xlsx") 
+		{ 
+			 layer.msg("请选择后缀为xls或xlsx的文件上传"); 
+			 return false;
+		}
+		return true;
+	};

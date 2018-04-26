@@ -1,0 +1,1 @@
+$(".keyupName").delegate("p","click",function(){})

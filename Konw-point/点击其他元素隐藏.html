@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+	#selectunit{
+		width:100px;
+		text-align: center;
+		line-height: 30px;
+		border: 4px solid #f00;
+	}
+	#tree{
+		width:200px;
+		height: 200px;
+		background: #ccc;
+		display: none;
+	}
+	</style>
+</head>
+<body>
+<div id="selectunit">点击显示</div>
+<div id="tree">显示元素</div>
+<script type="text/javascript" src="jquery-2.0.3.js"></script>
+<script type="text/javascript">
+ $(function(){
+ 	// 除点击元素外，点击其他元素隐藏
+ 	$('#selectunit').click(function(){
+		$('#tree').show();
+	});
+	$(document).bind("click",function(e){
+		var target = $(e.target);
+		if(target.closest("#selectunit").length == 0){
+			$("#tree").hide();
+		}
+	}) 
+ })
+	
+</script>
+</body>
+</html>

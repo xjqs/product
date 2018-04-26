@@ -1,0 +1,20 @@
+//银行卡号
+    var isCID = function isCID(cardNo) {
+        return (/^(\d{16}|\d{19})$/.test(cardNo)
+        );
+    };
+    //手机号码
+    var isMobile = function isMobile(mobile) {
+        return (/^1[3578][0-9]{9}$/.test(mobile)
+        );
+    };
+    //电子邮箱
+    var isEmail = function isEmail(email) {
+        return (/w+([-+.]w+)*@w+([-.]w+)*.w+([-.]w+)*/.test(email)
+        );
+    };
+    //身份证号
+    var isCertificate = function isCertificate(certificate) {
+        return (/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/.test(certificate)
+        );
+    };

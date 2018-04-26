@@ -1,0 +1,11 @@
+var param={
+						orgId:orgId,
+						code:code,
+						name:name
+				}
+var json={};				
+$.each(param, function(name, value) {			
+	if(value!=""&&value!=undefined){
+		json[name]=value;
+	}
+});				
