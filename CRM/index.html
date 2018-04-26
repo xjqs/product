@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+<div id="box">
+    <a href="add.html">新增用户信息</a>
+    <h4><span class="w50">编号</span><span class="w150">姓名</span><span class="w50">年龄</span><span class="w200">电话</span><span class="w200">地址</span><span class="w150">操作</span></h4>
+    <ul id="list">
+
+    </ul>
+</div>
+
+<script src="js/ajax.js"></script>
+<script>
+    var list = document.getElementById('list');
+    function bindHtml(data){
+        var str = "";
+        data.forEach(function (item,index){
+            str += '<li><span class="w50">'+item["id"]+'</span><span class="w150">'+item["name"]+'</span><span class="w50">'+item["age"]+'</span><span class="w200">'+item["phone"]+'</span><span class="w200">'+item["address"]+'</span><span class="w150"><a href="add.html?='+item["id"]+'">修改</a><a href="javascript:;" customId = "'+item["id"]+'">删除</a></span></li>';
+        });
+        list.innerHTML = str;
+    }
+    ajax({
+        url:'/getList',
+        success:function (jsonData){
+            var data = jsonData["data"];
+            if(jsonData.code === 0) {
+                bindHtml(data);
+            }else{
+                alert(jsonData.msg);
+            }
+        }
+    });
+    list.onclick = function(e){
+        e = e || event;
+        var target = e.target || e.srcElement;
+        if(target.innerText == "删除"){
+            var id = target.getAttribute("customId");
+            var flag = window.confirm("您确定要删除编号为"+id+"的客户吗？");
+            if(flag){
+                ajax({
+                    url:"/removeInfo?id=" + id,
+                    success:function (jsonData){
+                        if(jsonData.code === 0){
+                            list.removeChild(target.parentNode.parentNode);
+                        }
+                        alert(jsonData.msg);
+                    }
+                });
+            }
+        }
+    };
+</script>
+</body>
+</html>

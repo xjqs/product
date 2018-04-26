@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+<div id="add">
+    <div><span class="w80">姓名</span><input type="text" id="userName"></div>
+    <div><span class="w80">年龄</span><input type="text" id="userAge"></div>
+    <div><span class="w80">手机</span><input type="text" id="userPhone"></div>
+    <div><span class="w80">地址</span><input type="text" id="userAddress"></div>
+    <button id="btn">提交</button>
+</div>
+
+<script src="js/ajax.js"></script>
+<script>
+    var btn = document.getElementById('btn');
+    var winHref = window.location.href;
+    var index = winHref.indexOf("=");
+    var id = winHref.substr(index+1);
+    var flag = index < 0 ? false : true;
+
+    if(flag){
+        ajax({
+            url:"/getInfo?id=" + id,
+            success:function (jsonData){
+                var data = jsonData.data;
+                if(jsonData.code === 0){
+                    userName.value = data.name;
+                    userAge.value = data.age;
+                    userPhone.value = data.phone;
+                    userAddress.value = data.address;
+                }else{
+                    alert(jsonData.msg);
+                }
+            }
+        });
+    }
+
+    btn.onclick = function (){
+        var obj = {
+            name : userName.value,
+            age : userAge.value,
+            phone : userPhone.value,
+            address : userAddress.value
+        };
+        if(flag){
+            obj.id = id;
+            if(obj.name == "" && obj.age == "" && obj.phone == "" && obj.address == ""){
+                obj.id = "";
+            }
+            ajax({
+                url:"/updateInfo",
+                method:"post",
+                data:JSON.stringify(obj),
+                success:function (jsonData){
+                   if(jsonData.code === 0){
+                       window.location = "index.html";
+                   }
+                   alert(jsonData.msg);
+                }
+            });
+            return;
+        };
+        ajax({
+            url:"/addInfo",
+            method:"post",
+            data:JSON.stringify(obj),
+            success:function (jsonData){
+                if(jsonData.code === 0){
+                    window.location = "index.html";
+                }
+                alert(jsonData.msg);
+            }
+        });
+    };
+</script>
+</body>
+</html>
