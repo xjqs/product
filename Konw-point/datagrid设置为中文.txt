@@ -1,0 +1,15 @@
+//设置datagrid中文显示
+		setLangChina: function (id) {
+			$('#'+id+'').datagrid('getPager').pagination({        //分页栏下方文字显示
+				beforePageText: '第',//页数文本框前显示的汉字
+				afterPageText: '页    共 {pages} 页',
+				displayMsg:'当前显示：从第{from}条到{to}条 共{total}条记录',
+				onBeforeRefresh:function(pageNumber, pageSize){
+					$(this).pagination('loading');
+					//alert('pageNumber:'+pageNumber+',pageSize:'+pageSize);
+					$(this).pagination('loaded');
+				}
+			});
+		}
+		
+或者加载zh的一个文件

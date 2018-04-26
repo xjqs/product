@@ -1,0 +1,7 @@
+md5: function (psw) {
+            return $.md5(psw.toLowerCase()).toLowerCase();
+}
+
+
+引入md5.js
+调用md5(password)

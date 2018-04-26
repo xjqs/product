@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>html5移动端上传本地图片</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<style type="text/css">
+#test div{ width:200px; height:200px; display:inline-block; text-align:center;}
+#test div img{ max-width:200px; max-height:200px;}
+</style>
+</head>
+<body>
+<input type="file" id="file_input" multiple />
+<div id="test"></div>
+
+<script>
+window.onload = function(){
+	var input = document.getElementById('file_input');
+	var result, div;
+	if(typeof FileReader === 'undefined'){
+		result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+		input.setAttribute('disabled','disabled');
+	}else{
+		input.addEventListener('change', readFile, false);
+	}
+	
+	function readFile(){
+		for(var i=0; i<this.files.length; i++){
+			if( !input['value'].match(/.jpg|.gif|.png|.bmp/) ){  //判断上传文件格式
+				return alert('上传的图片格式不正确')
+			}
+			/*HTML5定义了FileReader作为文件API的重要成员用于读取文件，根据W3C的定义，FileReader接口提供了读取文件的方法和包含读取结果的事件模型。*/
+			
+			/*readAsDataURL：该方法将文件读取为一段以 data: 开头的字符串，这段字符串的实质就是 Data URL，Data URL是一种将小文件直接嵌入文档的方案。这里的小文件通常是指图像与 html 等格式的文件*/
+			var reader = new FileReader();
+			reader.readAsDataURL(this.files[i]);
+			reader.onload = function(e){
+				result = '<img src="' + this.result + '"/>'
+				div = document.createElement('div')
+				div.innerHTML += result
+				document.getElementById('test').appendChild(div)
+			}
+		}
+	}
+}
+</script>
+</body>
+</html>

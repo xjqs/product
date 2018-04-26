@@ -1,0 +1,16 @@
+http://www.jb51.net/article/51102.htm
+
+1，只能输入正整数
+<input type="text" id="floorup" onkeyup="this.value=this.value.replace(/\D/g,'')">
+
+2,只能输入大于0的数字
+<input type="text" id="conDeposit" onkeyup="if(isNaN(value))execCommand('undo')" >
+
+
+输入数字
+function keyUp(ob){
+  if (!ob.value.match(/^[\+\-]?\d*?\.?\d*?$/)) ob.value = ob.t_value; else ob.t_value = ob.value; if (ob.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/)) ob.o_value = ob.value;
+}
+调用：
+<input type="text" id="rulepay" onkeyup="keyUp(this)">	
+		

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script language="javascript" type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		/*1,oninput和onchange都是事件对象，当输入框的值发生改变时触发该事件。不同的是，oninput是在值改变时立即触发，而onchange是在值改变后失去焦点才触发
+		2,propertychange事件来处理功能同oninput，用以替代oninput在IE9以下的不兼容性。
+		用IE(LTE8)中元素特有的propertychange事件来处理(IE9已经没这玩意儿了)*/
+		$('#userText').on('input propertychange', function() {
+	        console.log($(this).val())
+	    });
+	})
+	</script>
+</head>
+<body>
+	<input type="text" id="userText">
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script language="javascript" type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		canvas.width = 100;
+		canvas.height = 100;
+		var radius = 0;
+		function drawCircle() {
+			ctx.beginPath();
+			ctx.arc(50, 50, radius, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = '#f00';
+			ctx.stroke();
+			radius += 0.5;
+		if (radius > 30) {
+			radius = 0;
+		}
+		}
+		function render() {
+		var prev = ctx.globalCompositeOperation;
+		ctx.globalCompositeOperation = 'destination-in';
+		ctx.globalAlpha = 0.95;
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		ctx.globalCompositeOperation = prev;
+			drawCircle();
+		};
+		var testtimer = setInterval(function() {
+			render();
+		}, 20);
+	})
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="300" height="300">
+		
+	</canvas>
+</body>
+</html>

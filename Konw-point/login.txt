@@ -1,0 +1,193 @@
+fire_cloud---login.js
+登录验证以及缓存登录信息
+
+(function($, window) {
+	var getClientView = cLib.base.getClientViewSize();
+	//验证
+	function Validate(){
+		var me = this;
+		me.isName = /^[\u4e00-\u9fa5a-zA-Z0-9_]{1,32}$/;//用户名
+		me.isPassword = /^(\w){6,20}$/;//密码
+	};
+	Validate.prototype = {
+		constructor:Validate,
+		/*phone:function (obj){
+			var me = this;
+			var str = obj.val();
+			return me.isPhone.test(str);
+		},
+		email:function (obj){
+			var me = this;
+			var str = obj.val();
+			return me.isEmail.test(str);
+		},*/
+		name:function(obj){
+			var me = this;
+			var str = obj.val();
+			return (me.stringLength(str)>0 && me.stringLength(str)<=32) && me.isName.test(str);
+		},
+		password:function (obj){
+			var me = this;
+			var str = obj.val();
+			return me.isPassword.test(str);
+		},
+		//计算用户名长度
+		stringLength:function(str) {
+
+			  var len = 0;
+			  for (var i=0; i<str.length; i++) {
+			    if (str.charCodeAt(i)>=19968&&str.charCodeAt(i)<=40869) {
+			       len += 3;
+			     } else {
+			       len ++;
+			     }
+			   }
+			  return len;
+			}
+	};
+	fc.module["validate"] = Validate;//验证
+	var valRegExp = new fc.module.validate();
+
+	// Login 登录页
+	function Login(options) {
+		var me = this;
+		options = {} || '';
+		me.username = options.username ? $('#' + options.username): $('#username');
+		me.password = options.password ? $('#' + options.password): $('#password');
+		me.vericode = options.vericode ? $('#' + options.vericode): $('#vericode');
+		me.remember = options.remember ? $('#' + options.remember): $('#rememberPassword');
+		me.errorinfo = options.errorinfo ? $('#' + options.errornfo): $('#errorinfo');
+		me.button = options.button ? $('#' + options.button) : $('#submit');
+		me.veriCodeFlag = false;
+	};
+	Login.prototype = {
+		constructor : Login,
+		init : function() {
+			var me = this;
+			me.event();
+		},
+		event : function() {
+			var me = this;
+			me.button.on('click', function(){
+				me.login();
+			});
+			$(document).on('keydown',function(e){
+				if(e.keyCode==13){ // enter 键
+					me.login();
+	             }
+			});
+		},
+		login:function() {
+			var me = this;
+			var username = me.isUserName(me.username);
+			var password = me.isPassword(me.password);
+
+			if ($.trim(me.username.val()) == '' || $.trim(me.username.val()) == 'undefined') {
+				me.username.focus();
+				me.errorinfo.html('请输入用户名！');
+				return false;
+			}else{
+				if(!username){
+					me.errorinfo.html('请正确输入用户名！');
+					return false;
+				}else{
+					me.errorinfo.html('');
+				}
+			};
+			if ($.trim(me.password.val()) == '' || $.trim(me.password.val()) == 'undefined') {
+				me.password.focus();
+				me.errorinfo.html('请输入密码！');
+				return false;
+			}else{
+				if(!password){
+					me.errorinfo.html('密码格式不正确，请重新输入！');
+					return false;
+				}else{
+					me.errorinfo.html('');
+				}
+			}
+			if (me.remember.prop('checked')) {
+				cLib.base.setCookie('username', me.username.val(), 10);
+				cLib.base.setCookie('password', me.password.val(), 10);
+			} else {
+				cLib.base.clearCookie('username');
+				cLib.base.clearCookie('password');
+			};
+			
+			if(username && password){
+				var hash = hex_md5(me.password.val());
+				var data = {
+						'username' : me.username.val(),
+						'password' : hex_md5(me.password.val())/*,
+						'vericode' : me.vericode.val()*/
+					};
+					$.ajax({
+						url : '../user/login.do',
+						type : 'post',
+						data : data,
+						success : function(json){
+							if(json.ret==0){
+								var datas = json.data;
+								var orgName="来访贵宾";
+								var orgId =-1;
+								var org = datas.org;
+								if(org != null){
+									orgName=org.name;
+									orgId =org.id;
+								}
+								var info = {'id':datas.id,'userName':datas.userName,'realName':datas.realName,'orgName':orgName,'orgId':orgId,'company':datas.company};
+								localStorage.setItem('loginUserInfo',JSON.stringify(info));
+								location.href="index.html";
+							}else{
+								alert(json.desc);
+							}
+						},
+						error : function(json) {
+							/*alert(json.desc);*/
+						}
+					});
+			}
+		},
+		isUserName : function(str) {// 验证用户名：汉字或者英文
+			var me = this;
+			//console.log(valRegExp)
+			var flag = valRegExp.name(str);
+			if (!flag) {
+				me.errorinfo.html('用户名中文或英文字母！');
+				return false;
+			} else {
+				me.errorinfo.html('');
+				return true;
+			};
+		},
+		isPassword : function(str) {
+			var me = this;
+			var flag = valRegExp.password(str);
+			if (!flag) {
+				me.errorinfo.html('密码格式为6-20为数字或字符包含"_"，请正确输入！');
+				return false;
+			} else {
+				me.errorinfo.html('');
+				return true;
+			};
+			
+		}
+	};
+	
+
+	fc.module["login"] = Login;// 登录
+
+})(jQuery, window);
+
+
+navigation.js
+取缓存数据
+var userInfo = JSON.parse(localStorage['loginUserInfo']);
+$('#username').attr('orgId',userInfo.orgId).html(userInfo.realName);
+
+
+HTMl5的存储方式sessionStorage和localStorage详解
+http://www.jb51.net/html5/144597.html
+
+sessionStorage和localStorage和cookie差异区别
+http://www.educity.cn/wenda/146043.html
