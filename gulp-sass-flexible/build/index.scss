@@ -1,0 +1,27 @@
+@import "base-m";
+@import "mixin";
+body{
+	background:#ccc;
+}
+#text{
+	width:pxToRem(750);
+	margin: 0 auto;
+	text-align: center;
+	.test{
+		height: 100px;
+		background: #f00;
+		display: inline-block;
+		width: 100%;
+		color:#0f0;
+		border:3px dotted #ff0;
+		@include borderRadius($radius:15px);
+		@include boxSizing(border-box);
+	}
+}
+@media screen and (min-width: 1300px) {
+    #text{
+		width:pxToRem(1300);
+	}
+}
+@include DPR("a",16px);
+@include DPR("#text",16px);

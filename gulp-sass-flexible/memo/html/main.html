@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css">
+	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="../js/memo.js"></script>
+	<script type="text/javascript" src="../js/main.js"></script>
+	<script>
+	    $(function () {
+	        new memo.module.main().init();
+	    })
+	</script>
+</head>
+<body>
+	<!-- 头部 -->
+	<div id="header"></div>
+	<div id="container">
+		<!--左侧导航 -->
+		<div id="nav"></div>
+		<!-- 右侧内容 -->
+		<div id="content">
+			<iframe id="contentIn" class="contentIn" src="test.html" name="downcon" scrolling="yes" width="100%" height="98%" frameborder="0"></iframe>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<div id="footer"></div>
+</body>
+</html>

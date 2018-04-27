@@ -1,0 +1,29 @@
+$(function(){
+		$.ajax({
+			url:'test.do',
+			success:funct  nion(json){
+				var data=eval(json);
+				console.log(typeof(data),1212)
+				$("#test").html('<option orgId="">全部</option>');
+				for(var i=0;i<data.length;i++){		
+					$("#test").append('<option orgId="'+data[i].id+'">'+data[i].firstName+'</option>');
+				};
+				$.each(data, function(name, value) {			
+					$("#test").append('<option orgId='+name+'>'+value+'</option>');
+				});
+			}
+		});
+		$("#button").click(function(){
+			var id=$("#test option:selected").attr('orgId');
+			var param={
+					orgId:id,
+			}
+			$.ajax({
+			url:'test.do',
+			data:param,
+			success:function(json){
+				$("#button").css('backgroundColor','#f00');
+			}
+		    });
+		})
+	})
