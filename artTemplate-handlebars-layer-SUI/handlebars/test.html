@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="jquery-2.0.3.js"></script>
+	<script type="text/javascript" src="handlebars-3.0.3.min.js"></script>
+</head>
+<body>
+	<table>
+		<tr>
+			<th></th>
+			<th>姓名</th>
+			<th>性别</th>
+			<th>年龄</th>
+		</tr>
+	</table>
+	<div id="tableList">
+		
+	</div>
+  <a href="tiaozhuan.html?id=1">
+    跳转
+  </a>
+	<script id="table-template" type="text/x-handlebars-template">
+	{{#each this}}
+       <tr>
+       	<td>{{addOne @index}}.</td>
+       	<td>{{name}}</td>
+       	<td>{{sex}}</td>
+       	<td>{{age}}</td>
+       </tr>
+       {{#each family}}
+         <tr>
+           <td>{{../_index}}.{{@index}}</td>
+           <td>{{name}}</td>
+           <td>{{sex}}</td>
+           <td>{{age}}</td>
+         </tr>
+       {{/each}}
+    {{/each}}
+    </script>
+    <script type="text/javascript">
+       $(document).ready(function() {
+         //模拟的json对象
+         var data = [{
+             name:"sky",
+             sex:"man",
+             age:"30",
+             family:[{
+             	name:"sky-son",
+             	sex:'man',
+             	age:'10'
+             },{
+             	name:"sky-qz",
+             	sex:'women',
+             	age:'30'
+             }]
+         },{
+         	name:"mary",
+            sex:"women",
+            age:"40"
+         },{
+         	name:"jone",
+            sex:"man",
+            age:"50"
+         }]
+         var handleHelper = Handlebars.registerHelper("addOne",function(index){
+	         //返回+1之后的结果
+	         this._index=index+1;
+	         return this._index;
+       	 });
+         //注册一个Handlebars模版，通过id找到某一个模版，获取模版的html框架
+         //使用 Handlebars.compile 进行编译模版; 
+         var myTemplate = Handlebars.compile($("#table-template").html());
+         
+         //将json对象用刚刚注册的Handlebars模版封装，得到最终的html，插入到基础table中。
+         $('#tableList').html(myTemplate(data));
+       });
+       var user={
+        count:1,
+        getCount:function(){
+          return this.count;
+        }
+       }
+       var func=user.getCount;
+       console.log(func());
+       console.log(user.getCount());
+     </script>
+</body>
+</html>

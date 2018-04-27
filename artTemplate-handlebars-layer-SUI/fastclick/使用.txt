@@ -1,0 +1,2 @@
+1，页面引入js
+2，js页面写FastClick.attach(document.body);

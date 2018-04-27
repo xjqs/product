@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" ng-app="bookStoreCtrls">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	
+	<style type="text/css">
+
+
+	</style>
+	
+</head>
+<body>
+
+
+<!-- 1，模块化示例 -->
+<!-- <div class="height" ng-controller="helloAngular">
+	<p>{{greeting.text}}</p>
+</div> -->
+
+<!-- 2，指令 -->
+<!-- <hello></hello> -->
+
+<!-- 3，双向数据绑定 -->
+<div>
+	<input ng-model="greeting.text">
+	<p>{{greeting.text}},AngularJS</p>
+</div>
+
+<div ng-controller="CommonController" style="height:1000px" name="test">
+	<div ng-controller="Controller1">
+		<p>{{greeting.text}},Angular</p>	
+		<!-- ng-bind绑定方法 -->
+		<p><span ng-bind="greeting.text"></span>,Angular</p>
+		<button ng-click="test1()">test1</button>
+	</div>
+	
+	<button ng-click="commonFn()">通用</button>
+</div>
+<ul ng-controller="BookListCtrl">
+    <li ng-repeat="book in books">
+        书名:{{book.title}}&nbsp;&nbsp;&nbsp;作者:{{book.author}}
+    </li>
+</ul>
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript">
+// 1，模块化示例
+// 第一个参数是模块的名称，第二是是依赖的模块
+/*var myModule=angular.module("HelloAngular",[]);
+// 依赖注入一个$code参数
+myModule.controller("helloAngular",['$scope',
+	function HelloAngular($scope){
+		$scope.greeting={
+			text:"Hello"
+		}
+	}
+])*/
+
+
+//2，指令  directive
+// var myModule=angular.module("MyModule",[]);
+// myModule.directive("hello",function(){
+// 		return{
+// 			restrict:"E",
+// 			template:"<div>Hi everybody</div>",
+// 			replace:true
+// 		}
+// 	})
+
+// function CommonController($scope){
+// 	$scope.commonFn=function(){
+// 		alert("通用功能")
+// 	}
+// }
+// function Controller1($scope){
+// 	$scope.greeting={
+// 		text:"hello"
+// 	};
+// 	$scope.test1=function(){
+// 		alert('test1');
+// 	}
+// }
+var bookStoreCtrls = angular.module('bookStoreCtrls', []);
+bookStoreCtrls.controller('BookListCtrl', ['$scope',
+    function($scope) {
+        $scope.books =[
+        	{title:"《Ext江湖》",author:"大漠穷秋"},
+        	{title:"《ActionScript游戏设计基础（第二版）》",author:"大漠穷秋"},
+        	{title:"《用AngularJS开发下一代WEB应用》",author:"大漠穷秋"}
+        ]
+    }
+]);
+</script>
+</body>
+</html>
